@@ -1,81 +1,106 @@
-# 🔗 URL Shortener (Node.js + Redis)
+# 🔗 URL Shortener (Node.js + Redis + MongoDB)
 
-A scalable backend system that converts long URLs into short, shareable links with fast redirection using Redis caching.
+A high-performance URL shortener backend built using **Node.js**, **Express**, **MongoDB**, and **Redis**.  
+It uses a **cache-first architecture** to deliver ultra-fast redirection and scalable performance.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-* Shorten long URLs into unique IDs
-* Fast redirection using Redis cache
-* Persistent storage with MongoDB
-* Rate limiting to prevent abuse
-* Clean backend architecture (Controller → Service → DB)
+- 🔗 Convert long URLs into short, unique IDs
+- ⚡ Fast redirection using Redis caching
+- 💾 Persistent storage with MongoDB
+- 🚦 Rate limiting to prevent abuse
+- 🧠 Cache-first strategy for performance optimization
+- 🧱 Clean layered architecture (Routes → Controllers → Services → DB)
 
 ---
 
 ## 🧠 Tech Stack
 
-* Node.js, Express.js
-* MongoDB (Mongoose)
-* Redis (Caching layer)
-* REST APIs
-* Morgan
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- Redis
+- Morgan (logging)
+- Express Rate Limiter
 
 ---
 
-## ⚡ Performance Improvements
+## ⚡ Architecture
 
-* Reduced DB reads using Redis caching
-* Faster redirect response for frequently accessed URLs
+Client → Express Route → Controller → Service Layer  
+                             ↓  
+                     Redis Cache (fast lookup)  
+                             ↓  
+                     MongoDB (fallback storage)
 
 ---
 
-## 📦 Setup
+## 📁 Project Structure
+src/
+├── config/
+├── controllers/
+├── routes/
+├── models/
+├── services/
+└── app.js
 
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
 ```bash
-git clone <your-repo>
-cd url-shortener
+git clone https://github.com/AkshatSingh11/URL-Shortener.git
+cd URL-Shortener
+
+### 1. Clone the repository
 npm install
-```
 
-Create `.env`:
-
-```
+3. Create .env file
 PORT=5000
 MONGO_URI=your_mongo_uri
-REDIS_URL=your_redis_uri
-```
+REDIS_URL=your_redis_url
 
-Run:
+4. Run the server
 
-```bash
 node src/app.js
-```
+OR (if nodemon is installed):
+npm run dev
 
----
-
-## 📌 API Endpoints
-
-### Create Short URL
-
+📌 API Endpoints
+🔗 Create Short URL
 POST /shorten
 
-```json
+Request Body:
+
 {
   "originalUrl": "https://example.com"
 }
-```
 
-### Redirect
+Response:
 
+{
+  "shortUrl": "http://localhost:5000/abc123"
+}
+🔁 Redirect URL
 GET /:shortId
 
----
+Redirects to the original URL.
 
-## 📈 Future Improvements
 
-* Custom short URLs
-* Analytics (click tracking)
-* Expiry-based links
-* Authentication layer
+🚀 Performance Highlights
+  ⚡ Redis reduces database calls significantly
+  🚀 Faster redirects for frequently accessed URLs
+  📉 Reduced MongoDB load using caching layer
+  🧠 Optimized read-heavy architecture
+
+📈 Future Improvements
+  Custom short URLs (user-defined aliases)
+  Click analytics dashboard
+  Expiry-based short links
+  JWT authentication system
+  Docker deployment
+
